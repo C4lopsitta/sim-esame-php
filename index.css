@@ -1,0 +1,38 @@
+body {
+    background-image: url("https://raw.githubusercontent.com/andreasjansson/win-3.1-backgrounds/refs/heads/master/cropped/thatch.bmp");
+    background-repeat: repeat;
+    color: black;
+}
+
+td, th {
+    border: black 1px solid;
+    padding: 0.5rem;
+}
+
+table, th {
+    border: black 2px solid;
+}
+
+table {
+    box-shadow: 1px 1px #0000000a;
+}
+
+form {
+    border: black 1px solid;
+    margin: 1rem;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+form label {
+    display: flex;
+    flex-flow: column;
+    gap: 0.5rem;
+    font-weight: bold;
+}
+
+form label select {
+    width: 32rem;
+}
+

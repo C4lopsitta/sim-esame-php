@@ -1,19 +1,20 @@
 <?php
 
-class Pilot {
+class Instructor {
+
   private $id;
   private $name;
   private $surname;
   private $birthDate;
-  private $medicalCertificate;
+  private $license;
 
-  public function __construct($id, $name, $surname, $birthDate, $medicalCertificate)
+  public function __construct($id, $name, $surname, $birthDate, $license)
   {
     $this->id = $id;
     $this->name = $name;
     $this->surname = $surname;
     $this->birthDate = $birthDate;
-    $this->medicalCertificate = $medicalCertificate;
+    $this->license = $license;
   }
 
   public function toHtmlRow() {
@@ -57,12 +58,12 @@ HTML;
     $this->birthDate = $birthDate;
   }
 
-  public function getMedicalCertificate() {
-    return $this->medicalCertificate;
+  public function getLicense() {
+    return $this->license;
   }
 
-  public function setMedicalCertificate($medicalCertificate) {
-    $this->medicalCertificate = $medicalCertificate;
+  public function setLicense($license) {
+    $this->license = $license;
   }
 
   public function toOption(): string {
@@ -71,5 +72,4 @@ HTML;
     $this->name $this->surname (id $this->id)
 </option>
 HTML;
-  }
-}
+  }}

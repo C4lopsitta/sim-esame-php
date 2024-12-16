@@ -73,10 +73,15 @@ class Lesson {
     $this->duration = $duration;
   }
 
-  public function __toString() {
+  public function toRow(): string {
     return <<< HTML
 <tr>
-
+    <td>$this->id</td>
+    <td>$this->type</td>
+    <td>$this->argument</td>
+    <td>$this->date</td>
+    <td>$this->duration</td>
+    <td>$this->course</td>
 </tr>
 HTML;
   }

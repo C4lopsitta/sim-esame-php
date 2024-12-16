@@ -3,6 +3,9 @@ include_once ("GenericDAO.php");
 include_once ("../Classes/Lesson.php");
 
 class LessonsDAO extends GenericDAO {
+  /**
+   * @throws Exception
+   */
   public static function create(object $obj): int {
     if(GenericDAO::$pdo == null) {
       throw new Exception("PDO is not instantiated");

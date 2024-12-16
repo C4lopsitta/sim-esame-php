@@ -3,41 +3,99 @@
 include_once ("./Dao/PilotsDAO.php");
 include_once ("./Dao/GenericDAO.php");
 include_once ("./Classes/Pilot.php");
+include_once ("./Classes/Lesson.php");
 
 GenericDAO::connect();
 
-$pilotId = -1;
 $pilot = null;
+$allPilots = array();
 $error = null;
-
-if($_SERVER["REQUEST_METHOD"] == "GET"){
-  $pilotId = $_REQUEST["id"];
-}
+$absences = array();
 
 try {
-  if($pilotId == -1){
-      throw new Exception("No Pilot ID provided");
-  }
-  $pilot = PilotsDAO::read((int) $pilotId);
-  if($pilot == null){
-      throw new Exception("Pilot with ID $pilotId not found");
-  }
+  $allPilots = PilotsDAO::readAll();
 } catch (Exception $e) {
   $error = $e->getMessage();
 }
 
+
 ?>
+
 <html lang="en">
   <head>
-    <title>SmartFly - Pilot</title>
+      <title>SmartFly - Pilot</title>
+      <link rel="stylesheet" type="text/css" href="index.css" />
   </head>
   <body>
-    <?php
-    if($error != null) echo "<h1>" . $error . "</h1>";
-    ?>
-    <h1><?php echo $pilot->getName() . " " . $pilot->getSurname() ?></h1>
-    <p><?php echo $pilot->getBirthDate() ?></p>
-    <p><?php echo $pilot->getMedicalCertificate() ?></p>
+    <form action="/pilot.php" method="get">
+        <label>
+            Student
+            <select id="id" name="id">
+                <?php
+                foreach($allPilots as $pilot){
+                    echo $pilot->toOption();
+                }
+                ?>
+            </select>
+        </label>
+        <button type="submit">
+            Go to student
+        </button>
+    </form>
+
+
+<?php
+if($_SERVER["REQUEST_METHOD"] == "GET"){
+    if(isset($_GET["id"]) && $_GET["id"] != null) {
+      try {
+        $pilot = PilotsDAO::read($_GET["id"]);
+        $absences = PilotsDAO::readAbsencesByPilot($pilot);
+
+        $htmlAbsences = "";
+        foreach($absences as $ab){
+          $htmlAbsences = $htmlAbsences . $ab->toRow();
+        }
+
+        $pilotName = $pilot->getName() . " " . $pilot->getSurname();
+        $pilotBday = $pilot->getBirthDate();
+        $pilotCert = $pilot->getMedicalCertificate();
+
+        echo <<< HTML
+    <h1>$pilotName</h1>
+    <p>Birthday: $pilotBday</p>
+    <p>Medical Certificate: $pilotCert</p>
+
+    <br>
+    <h2>Lessons where student was absent</h2>
+    <table>
+        <thead><tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Argument</th>
+            <th>Date</th>
+            <th>Duration</th>
+            <th>Course ID</th>
+        </tr></thead>
+        <tbody>
+            $htmlAbsences
+        </tbody>
+    </table> 
+HTML;
+      } catch (Exception $e) {
+        echo $e->getMessage();
+      }
+    } else {
+        echo <<< HTML
+<h1>Select a pilot to view all lessons where they were absent</h1>
+HTML;
+
+    }
+}
+
+
+
+?>
+
   </body>
 </html>
 
