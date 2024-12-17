@@ -75,6 +75,41 @@ class PilotsDAO extends GenericDAO {
     return $pilots;
   }
 
+  public static function getCount(): int {
+    if(GenericDAO::$pdo == null) {
+      throw new Exception("PDO is not instantiated");
+    }
+
+    $result = GenericDAO::$pdo->query("SELECT COUNT(*) FROM studentPilot;");
+    $rows = $result->fetch(PDO::FETCH_NUM);
+    return $rows[0];
+  }
+
+  public static function readPage($items, $offset): ?array {
+    if(GenericDAO::$pdo == null) {
+      throw new Exception("PDO is not instantiated");
+    }
+
+    $result = GenericDAO::$pdo->query("SELECT * FROM studentPilot ORDER BY id LIMIT $items OFFSET $offset;");
+
+    $rows = $result->fetchAll(PDO::FETCH_ASSOC);
+
+    $pilots = array();
+
+    foreach ($rows as $row) {
+      $pilots[] = new Pilot(
+         $row["id"],
+         $row["name"],
+         $row["surname"],
+         $row["birthDate"],
+         $row["medicalCertificate"]
+      );
+    }
+
+    return $pilots;
+  }
+
+
   public static function update(object $obj): bool {
     if(GenericDAO::$pdo == null) {
       throw new Exception("PDO is not instantiated");

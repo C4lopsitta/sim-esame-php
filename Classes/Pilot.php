@@ -72,4 +72,17 @@ HTML;
 </option>
 HTML;
   }
+
+  public function toRow(): string {
+    return <<< HTML
+<tr>
+    <td>$this->id</td>
+    <td>$this->name</td>
+    <td>$this->surname</td>
+    <td>$this->birthDate</td>
+    <td>$this->medicalCertificate</td>
+</tr>
+HTML;
+
+  }
 }

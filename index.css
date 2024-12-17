@@ -1,6 +1,6 @@
 body {
-    background-image: url("https://raw.githubusercontent.com/andreasjansson/win-3.1-backgrounds/refs/heads/master/cropped/thatch.bmp");
-    background-repeat: repeat;
+    /*background-image: url("https://raw.githubusercontent.com/andreasjansson/win-3.1-backgrounds/refs/heads/master/cropped/thatch.bmp");*/
+    /*background-repeat: repeat;*/
     color: black;
 }
 
@@ -34,5 +34,14 @@ form label {
 
 form label select {
     width: 32rem;
+}
+
+footer {
+    display: inline-block;
+}
+
+footer a {
+    padding: 1rem;
+    margin-left: 1rem;
 }
 
