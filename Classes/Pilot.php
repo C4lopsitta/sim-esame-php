@@ -75,12 +75,13 @@ HTML;
 
   public function toRow(): string {
     return <<< HTML
-<tr>
+<tr id="$this->id">
     <td>$this->id</td>
     <td>$this->name</td>
     <td>$this->surname</td>
     <td>$this->birthDate</td>
     <td>$this->medicalCertificate</td>
+    <td><a href="/pilot.php?id=$this->id">Details</a></td>
 </tr>
 HTML;
 

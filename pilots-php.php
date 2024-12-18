@@ -19,7 +19,10 @@ try {
       $offset = 0;
   }
 
-  $pilots = PilotsDAO::readPage($items, $offset * $items);
+  $allPilots = PilotsDAO::readAll();
+
+  $pilots = array_splice($allPilots, $offset * $items, $items);
+
 } catch (Exception $exception) {
   echo "<h1>".$exception->getMessage()."</h1>";
 }
@@ -33,7 +36,7 @@ try {
   <link rel="stylesheet" type="text/css" href="index.css" />
 </head>
 <body>
-    <h1>All Pilots - DBMS Paging</h1>
+    <h1>All Pilots - PHP Paging</h1>
     <table>
         <thead>
             <tr>
